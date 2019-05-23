@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<package version="1.0.0" uuid="zoraga-65d457">
+ <names>
+  <name lang="en_US">ZoraGA</name>
+ </names>
+ <supportedLanguages>
+  <language>en_US</language>
+ </supportedLanguages>
+ <descriptionLanguages>
+  <language>en_US</language>
+ </descriptionLanguages>
+ <contents>
+  <behaviorContent path="behavior_1">
+   <nature>interactive</nature>
+   <names>
+    <name lang="en_US">ZoraGA</name>
+   </names>
+   <permissions/>
+  </behaviorContent>
+  <dialogContent typeVersion="1.0" topicName="bingoCommands&#xd;"/>
+  <dialogContent typeVersion="1.0" topicName="ExampleDialog">
+   <topic path="ExampleDialog/ExampleDialog_enu.top" language="en_US"/>
+  </dialogContent>
+  <dialogContent typeVersion="1.0" topicName="stt">
+   <topic path="stt/stt_enu.top" language="en_US"/>
+  </dialogContent>
+ </contents>
+</package>

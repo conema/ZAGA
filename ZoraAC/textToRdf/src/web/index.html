@@ -1,0 +1,273 @@
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"/>
+	<script>
+		$(document).ready(function () {
+			$("#submit_button").click(function(){
+				if(!$.trim($('textarea').val()) == ""){
+					$('textarea').fadeIn().html('').css({  'border' : '1px solid black',
+														   'border-radius' : '10px',
+														   'background-color' : 'white'
+														});
+					$( "#move" ).addClass( "move" );
+					$( "#loader" ).removeClass( "loader-invisible" )
+					$( "#loader" ).addClass( "loader" );
+					
+					$.post("/text2rdf/",
+						{
+							input_text: $("#input_text").val(),
+							output_format: $("#output_format").val()
+						},
+						function(data, status){
+							loadResult(data)
+						}
+					);
+				}else{
+					$( 'textarea' ).fadeIn().html('').css({'border' : '1px solid red',
+														   'border-radius' : '10px',
+														   'background-color' : '#ffddcc'
+														});				   
+				}	
+			});	
+		});
+		
+		function loadResult(data){
+			if ($( "#output_format" ).val() == 'image'){
+				$( "#img_result" ).remove();
+				$( "#result_content" ).remove();
+				$( "#result" ).append( "<img src='' id='img_result'>" );
+				$("#img_result").attr('src', data)
+			} else {
+				$( "#img_result" ).remove();
+				$( "#result_content" ).remove();
+				$( "#result" ).append( "<pre id='result_content'>" + data + "</pre>" );
+			}
+			$( "#loader" ).removeClass( "loader" )
+			$( "#move" ).removeClass( "move" )
+			$( "#loader" ).addClass( "loader-invisible" );
+			
+		}
+		
+	</script>
+	<style>
+	
+		body{
+			text-align: center;
+		}
+		
+		
+		@-webkit-keyframes example {
+			0%   {background-color:yellow; left:50%; top:75%;}
+			50%  {background-color:red; left:75%; top:75%;}
+			100% {background-color:yellow; left:50%; top:75%;}
+		}
+		
+		#head-title{			
+			text-align:left;
+		}	
+		
+		#head-title h1{			
+			margin-left:30%;
+			display: inline;
+			width:10em;
+			max-width:10em;
+			font-size:3em;	
+			float:left;
+		}			
+		
+		#head-title .move{
+			position: relative;
+			-webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+			-webkit-animation-duration: 60s; /* Safari 4.0 - 8.0 */
+			-webkit-animation-iteration-count: infinite; /* Safari 4.0 - 8.0 */
+			animation-name: example;
+			animation-duration: 60s;
+			animation-iteration-count: infinite;	
+			width:3em;
+			max-width:3em;
+			height: 3em;
+			border-radius:50%;
+		}
+		
+		#head-description{
+			margin-left:20%;
+			margin-right:20%;	
+		}	
+
+		form{
+			display:inline;
+		}
+		
+		.textarea {
+			height: 15em;
+			width: 70%;
+			max-width: 70%;
+			font-size:14px;
+			padding-left:1%;
+			padding-top:1%;
+			border-radius: 10px;
+		}
+		
+		
+		#output_format{
+			width: 12em;
+			max-width: 12em;
+			height: 2.7em;
+			text-align:center;
+			font-size:13px;
+			border-radius: 8px;
+		}
+		
+		#submit_button{
+			font-family:proxima-nova, sans-serif ;
+			font-size: 15px;
+			color: white;
+			width: 12em;
+			max-width: 12em;
+			height: 2.8em;
+			border-radius: 12px;
+			text-align: center;
+			padding: 5px 35px;
+			margin-top: 10px;
+			font-size: 16px;
+			font-weight:500;
+			background-color: #004488;
+			border: 1px solid #004488;
+			margin-left: 1em;
+			
+		}
+		
+		
+		a:link {
+			color: blue;
+			text-decoration: none;
+		}
+
+		a:visited {
+			color: green;
+		}
+
+		a:hover {
+			color: green;
+			text-decoration: underline;
+		}
+		
+		
+		#result_content{
+			background-color: ffff99;;
+			margin-left:10%;
+			margin-right:10%;		
+			padding-top: 5px;
+			padding-bottom: 5px;
+			padding-left: 3%;
+			padding-right: 3%;
+			text-align:left
+			
+		}
+		
+		/* Safari */
+		@-webkit-keyframes spin {
+		  0% { -webkit-transform: rotate(0deg); }
+		  100% { -webkit-transform: rotate(360deg); }
+		}
+
+		@keyframes spin {
+		  0% { transform: rotate(0deg); }
+		  100% { transform: rotate(360deg); }
+		}
+		
+		#loader-container {
+		  min-width: 100%;
+		  max-width: 100%;
+		  height: 35px;
+		  text-align:center;
+		  align:center;
+		  width:100%;
+		  margin-top:5px;
+		}
+		
+		.loader {
+		  border: 8px solid #f3f3f3;
+		  border-radius: 50%;
+		  border-top: 8px solid #3498db;
+		  width: 30px;
+		  max-width: 40px;
+		  height: 30px;
+		  -webkit-animation: spin 2s linear infinite; /* Safari */
+		  animation: spin 2s linear infinite;
+		  text-align:center;
+		  margin-left: 50%;
+		  
+		}
+		
+		.loader-invisible {
+		  width: 40px;
+		  max-width: 40px;
+		  height: 40px;
+		  text-align:center;
+		}
+		
+		img {
+			width: 100%;
+			height: auto;
+		}
+		
+		
+
+	</style>
+</head>
+<body>
+	<div id="head">
+		<div id="head-title">
+			<h1>Text2RDF</h1>
+		</div>
+		<div style="clear: both;"></div>
+		<div id="head-description">
+			<p>Text2RDF is a tool for automatically parsing a text and obtaining owl/rdf. A paper describing it has been published in ... . Please refer to it in scientific publications.
+			The documentation about how to use Text2RDF can be found <a href="" target="_blank">here</a></p>
+		
+		</div>
+	</div>
+	<div style="clear: both;"></div>
+	<br>
+	<div id="input_form_container">
+		<form accept-charset="UTF-8" >		
+			<div id="text_input">
+				<label id="text_input_label"><b>Insert text</b> </label><br>
+				<textarea style="resize:none" name="input_text" id="input_text" class="textarea" placeholder="Type your text here" ></textarea><br>
+			</div>
+			
+			<label for="output_format" class="inputs_labels">Output format </label>
+			<select id='output_format' name='output_format' id="output_format">
+				<option value="rdf/xml" id="rdf/xml" selected="selected">rdf/xml</option>
+				<!--<option value="image" id="image">Image</option>-->
+				<option value="triples" id="triples">Triples</option>
+				<option value="n3" id="n3">N3</option>
+				<option value="turtle" id="turtle">Turtle</option>
+				<option value="pretty-xml" id="pretty-xml">Pretty-xml</option>
+			</select> 
+		</form>
+		
+		<button value="Send" id="submit_button">Send</button>
+		
+		<div id="loader-container">
+			<div id="loader" class="loader-invisible"/>
+		</div>
+		
+	</div>
+	<div style="clear: both;"></div>
+	
+	<div id="result">	
+		
+	</div>			
+	
+	<div id="end"/>	
+		
+	
+	<div id="stats"/>
+	</div>
+</div>
+
+</body>
+
+</html>

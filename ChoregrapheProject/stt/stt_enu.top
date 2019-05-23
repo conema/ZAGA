@@ -1,0 +1,7 @@
+topic: ~stt()
+language: enu
+
+u:({*} [stop exit sleep bye close quit done] {*}) $stop=1
+u:("I think this is good") $message="I think this is good"
+u:("I think this is bad") $message="I think this is bad"
+u:(_*) $message=$1

@@ -1,0 +1,346 @@
+<html>
+
+<script>
+function disableTextArea() {
+    document.getElementById("nodes").disabled = true;
+	document.getElementById("edges").disabled = true;
+	document.getElementById("nodes_file").disabled = false;
+	document.getElementById("edges_file").disabled = false;
+		
+	var x = document.getElementsByClassName("btn");
+    var i;
+    for (i = 0; i < x.length; i++) {
+        x[i].style.color = "#2F2F2F";
+    }
+	
+}
+
+function activateTextArea() {
+    document.getElementById("nodes").disabled = false;
+	document.getElementById("edges").disabled = false;
+	document.getElementById("nodes_file").disabled = true;
+	document.getElementById("edges_file").disabled = true;	
+		
+	var x = document.getElementsByClassName("btn");
+	var i;
+	for (i = 0; i < x.length; i++) {
+		x[i].style.color = "#E1E1E1";
+	}
+}
+
+function heuristic_options(){
+	var x = document.getElementById("method").value;
+	//document.getElementById("demo").innerHTML = "You selected: " + x;
+	if (x == 'h1'){
+		document.getElementById("h1tr").disabled = false;
+		document.getElementById("sample_size").disabled = true;
+	}
+	if (x == 'h3' || x == 'h4'){
+		document.getElementById("h1tr").disabled = true;
+		document.getElementById("sample_size").disabled = true;
+	}
+	if (x == 'h2' || x == 'h5'){
+		document.getElementById("h1tr").disabled = true;
+		document.getElementById("sample_size").disabled = false;
+	}
+	
+}
+
+
+</script>
+
+
+<head>
+	<style>
+		body{
+			background-color: blank;
+			text-align: center;
+		}
+		h1{font-family:Trebuchet MS;
+			text-align: center;
+		}
+		
+		p{font-family:Helvetica}
+		
+		label{font-family:Helvetica}
+		
+		#head{
+			width: 100%;
+			
+		}
+		
+		#head-left{
+			width: 38%;
+			float: left;
+			text-align: right;
+			margin-left: 5%;
+			padding-left: 3%;
+			padding-right: 3%;
+			color: #000066;
+			
+		}
+		#head-right{
+			width: 38%;
+			float: right;
+			text-align: left;
+			margin-right: 5%;
+			padding-left: 3%;
+			padding-right: 3%;
+			text-align: justify;
+			border-left: 2px solid #cc0000;
+		}
+		#input_form_container{
+			display: flex;
+			justify-content: center;
+		}
+		
+		#input_mode {
+			//background-color:rgba(230, 0, 0, 0.3);
+			border-bottom: 2px solid #cc0000;
+			border-top: 2px solid #cc0000;
+			padding: 0.5em;
+			
+		}
+		#input_form{			
+			text-align: center;
+			margin:auto;
+		}
+		#submit_button{
+			font-family:proxima-nova, sans-serif ;
+			font-size: 15px;
+			color: #2F2F2F;
+			width: 60%;
+			height: 2.5em;
+			border-radius: 8px;
+			text-align: center;
+			padding: 12px 35px;
+			margin-top: 8px;
+			font-size: 16px;
+			border: 1px solid #cc0000;
+		}
+		
+		.centered{
+			text-align: center;
+		}
+		
+		textarea {
+			height: 12em;
+			width: 95%;
+			font-size:14px;
+			padding-left:5%;
+			padding-top:5%;
+		}
+		
+		
+		tr.bottom_line td{
+			border-bottom: 2px solid #cc0000;
+			height: 1em;
+		}
+		
+		tr.colored td{
+			background-color:rgb(0, 0, 102, 0.1);
+			border-collapse: collapse;
+		}	
+		
+		.upload-btn-wrapper {
+		  position: relative;
+		  overflow: hidden;
+		  display: inline-block;
+		  align: center;
+		  
+		}
+
+		.btn {
+		  border: 1px solid #000066;
+		  color: #E1E1E1;
+		  padding: 8px;
+		  border-radius: 8px;
+		  font-size: 15px;
+		  width: 10em;
+		  margin-top: 4px;
+		}
+
+		.upload-btn-wrapper input[type=file] {
+		  font-size: 100px;
+		  position: absolute;
+		  left: 0;
+		  top: 0;
+		  opacity: 0;
+		}
+		
+		a:link {
+			color: blue;
+			text-decoration: none;
+		}
+
+		a:visited {
+			color: green;
+		}
+
+		a:hover {
+			color: green;
+			text-decoration: underline;
+		}
+		
+		#nodes_inputs{
+			float:left;
+			margin-top:2%;
+			margin-right:2%;
+			width: 30%;
+		}
+		
+		#edges_inputs{
+			float:left;
+			margin-top:2%;
+			margin-right:2%;
+			width: 30%;
+		}
+		
+		#options_inputs{
+			width: 34%;
+			float:left;
+			margin:1%;
+			height: 18em;
+		}
+		
+		.inputs {
+			width: 100%;
+			height: 25px;
+			text-align:center;
+			font-size:13px;
+		}
+		
+		.inputs_labels{
+			font-size:14px;
+		}
+		
+		#method{
+			width: 100%;
+			height: 25px;
+			text-align:center;
+			font-size:13px;
+		}
+		#select_type{
+			width: 100%;
+			height: 25px;
+			text-align:center;
+			font-size:13px;
+		}
+		
+		#end{
+			border-bottom: 2px solid #cc0000;
+		}
+}
+		
+	</style>
+	
+</head>
+
+<body>
+	<div id="head">
+		<div id="head-left">
+			<h1>SuperNoder Web </h1><p id="demo"></p>
+			 <!-- <img src="web/logo-supernoder.png" alt="Supernoder Web"> -->
+		</div>
+		<div id="head-right">
+			<p>SuperNoder is a tool for automatically finding disjoint over-represented structures in networks.</p>
+			<p>A paper describing SuperNoder has been published in ... . Please refer to it in scientific publications.
+			   The documentation about how to use SuperNoder can be found <a href="https://github.com/danilo-dessi/SuperNoder-v1.0" target="_blank">here</a></p>
+		
+		</div>
+	</div>
+	<div style="clear: both;"></div>
+	<br>
+	<div id="input_form_container">
+		<form accept-charset="UTF-8" method="POST"  enctype="multipart/form-data" id="input_form">
+		
+			<div id="input_mode">
+				<label for="mode"><b>Choose how you like loading the network. </b></label><br>
+				<input type="radio" name="mode" value="text"checked onclick="activateTextArea()"> <label>Read from textareas</label>&#10;&#10;
+				<input type="radio" name="mode" value="file" onclick="disableTextArea()"><label>Read from file</label><br>
+			</div> <br>
+			
+			<div id="user_inputs" class="centered">
+				<div id="nodes_inputs">
+					<label class="inputs_labels"><b>Insert nodes</b> &nbsp; nodeID &nbsp; &lt blank_space &gt &nbsp; label </label><br>
+					<textarea style="resize:none" name="nodes" id="nodes">1 A&#10;2 B&#10;3 C&#10;4 A&#10;5 A&#10;6 A</textarea><br>
+					<div class="upload-btn-wrapper">
+						<button class="btn">Upload nodes</button>
+						<input type="file" name="nodes_file" id="nodes_file" disabled>
+					</div>
+				</div>
+				
+				<div id="edges_inputs" class="centered">
+					<label class="inputs_labels"><b>Insert edges</b> &nbsp; nodeID &nbsp; &lt blank_space &gt &nbsp; nodeID</label><br>
+					<textarea style="resize:none" name="edges" id="edges">1 2&#10;1 3&#10;1 5&#10;2 3&#10;2 6&#10;6 1</textarea><br>
+					<div class="upload-btn-wrapper">
+						<button class="btn">Upload edges</button>
+						<input type="file" name="edges_file" id="edges_file" disabled>
+					</div>
+				</div>
+				
+				<div id="options_inputs" class="centered">
+					<table>
+						<tr class="colored">
+							<td><label for="motif_size" class="inputs_labels">Motif size </label> </td>
+							<td><input type="number" name="motif_size" min="3" value="3" class="inputs"><br></td>
+						</tr>
+						
+						<tr>
+							<td><label for="method" class="inputs_labels">Select the heuristic method </label></td>
+							<td><select id='method' name='method' onchange="heuristic_options()" id="method">
+							  <option value="h1" id="h1">H1 - Greedy Elimination</option>
+							  <option value="h2" id="h2">H2 - Ramsey</option>
+							  <option value="h3" id="h3">H3 - Ranked Elimination</option>
+							  <option value="h4" id="h4" selected="selected">H4 - Repeated Ranked Elimination</option>
+							  <option value="h5" id="h5">H5 - Sampled Ranked Elimination</option>
+							</select> </td>
+						</tr>
+						
+						<tr class="colored">
+							<td><label for="type_of_network" class="inputs_labels">Select the network type </label></td>
+							<td><select id='type_of_network' name='type_of_network' id="select_type">
+							  <option value="undirect" id="undirect" selected="selected">undirect</option>
+							  <option value="direct" id="direct">direct</option>
+							</select></td>
+						</tr>
+						
+						<tr>
+							<td><label for="threshold" class="inputs_labels">Threshold </label></td>
+							<td><input type="number" name="threshold" min="1" value="1" class="inputs"></td>
+						</tr>
+						
+						<tr class="colored">
+							<td><label for="n_repetitions" class="inputs_labels">Number of iterations to generate hierarchical levels</label></td>
+							<td><input type="number" name="n_repetitions" min="1" value="1" class="inputs"></td>
+						</tr>
+						
+						<tr>
+							<td><label for="h1tr" class="inputs_labels">Number of repetitions (H1 only) </label></td>
+							<td><input type="number" name="h1tr" min="1" value="1" id="h1tr" class="inputs"></td>
+						</tr>
+						
+						<tr class="colored">
+							<td><label for="sample_size" class="inputs_labels">Size of samples (H2 or H5 only) </label></td>
+							<td><input type="number" name="sample_size" min="5" value="100" id="sample_size" class="inputs" disabled></td>
+						</tr>
+						
+						<tr >
+							<td colspan="2" class="centered"><input type="submit" value="Submit Network" id="submit_button"/></td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+			<div style="clear: both;"></div>
+			<div id="end"/>	
+		</form>
+		
+	</div>
+<div id="stats"/>
+</div>
+</div>
+
+</body>
+
+</html>

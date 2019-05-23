@@ -1,0 +1,5 @@
+topic: ~listening()
+language: enu
+
+u:(^mode(disabled) {*} [stop exit bye quit] {*}) $stop=1
+u:(^mode(disabled) _* ) $sentence=$1

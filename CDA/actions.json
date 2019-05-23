@@ -1,0 +1,90 @@
+{
+    "manifest": {
+        "displayName": "Zora Switch",
+        "invocationName": "Zora Switch",
+        "category": "PRODUCTIVITY"
+    },
+    "actions": [
+        {
+            "name": "me.conema.actions.ZoraSwitch",
+            "availability": {
+                "deviceClasses": [
+                    {
+                        "assistantSdkDevice": {}
+                    }
+                ]
+            },
+            "intent": {
+                "name": "me.conema.intents.ZoraSwitch",
+                "parameters": [
+                    {
+                        "name": "action",
+                        "type": "Action"
+                    }
+                ],
+                "trigger": {
+                    "queryPatterns": [
+                        "execute $Action:action"
+                    ]
+                }
+            },
+            "fulfillment": {
+                "staticFulfillment": {
+                    "templatedResponse": {
+                        "items": [
+                            {
+                                "simpleResponse": {
+                                    "textToSpeech": "Starting $action"
+                                }
+                            },
+                            {
+                                "deviceExecution": {
+                                    "command": "me.conema.commands.ZoraSwitch",
+                                    "params": {
+                                        "action": "$action"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    ],
+    "types": [
+        {
+            "name": "$Action",
+            "entities": [
+				{
+                    "key": "bingo",
+                    "synonyms": [
+                        "bingo"
+                    ]
+                },
+                {
+                    "key": "object recognition",
+                    "synonyms": [
+                        "object recognition",
+                        "o r"
+                    ]
+                },
+                {
+                    "key": "action commands",
+                    "synonyms": [
+                        "a c",
+						"action",
+						"ontology"
+                    ]
+                },
+                {
+                    "key": "sentiment analysis",
+                    "synonyms": [
+                        "sentiment analysis",
+                        "sentiment",
+                        "s a"
+                    ]
+                }
+            ]
+        }
+    ]
+}

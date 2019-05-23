@@ -1,0 +1,348 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/federico-spiga/ontologies/Colors#"
+     xml:base="http://www.semanticweb.org/federico-spiga/ontologies/Colors"
+     xmlns:Colors="http://www.semanticweb.org/federico-spiga/ontologies/Colors#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/federico-spiga/ontologies/Colors">
+        <rdfs:comment>Ontology for color with respective names and RGB values.</rdfs:comment>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/federico-spiga/ontologies/Colors#name -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/federico-spiga/ontologies/Colors#name">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Color"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/federico-spiga/ontologies/Colors#rgbCoordinate -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/federico-spiga/ontologies/Colors#rgbCoordinate"/>
+    
+
+
+    <!-- http://www.semanticweb.org/federico-spiga/ontologies/Colors#rgbCoordinateBlue -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/federico-spiga/ontologies/Colors#rgbCoordinateBlue">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/federico-spiga/ontologies/Colors#rgbCoordinate"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Color"/>
+        <rdfs:range>
+            <rdfs:Datatype>
+                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+                <owl:withRestrictions rdf:parseType="Collection">
+                    <rdf:Description>
+                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#int">0</xsd:minInclusive>
+                    </rdf:Description>
+                    <rdf:Description>
+                        <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#int">255</xsd:maxInclusive>
+                    </rdf:Description>
+                </owl:withRestrictions>
+            </rdfs:Datatype>
+        </rdfs:range>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/federico-spiga/ontologies/Colors#rgbCoordinateGreen -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/federico-spiga/ontologies/Colors#rgbCoordinateGreen">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/federico-spiga/ontologies/Colors#rgbCoordinate"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Color"/>
+        <rdfs:range>
+            <rdfs:Datatype>
+                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+                <owl:withRestrictions rdf:parseType="Collection">
+                    <rdf:Description>
+                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#int">0</xsd:minInclusive>
+                    </rdf:Description>
+                    <rdf:Description>
+                        <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#int">255</xsd:maxInclusive>
+                    </rdf:Description>
+                </owl:withRestrictions>
+            </rdfs:Datatype>
+        </rdfs:range>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/federico-spiga/ontologies/Colors#rgbCoordinateRed -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/federico-spiga/ontologies/Colors#rgbCoordinateRed">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/federico-spiga/ontologies/Colors#rgbCoordinate"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Color"/>
+        <rdfs:range>
+            <rdfs:Datatype>
+                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+                <owl:withRestrictions rdf:parseType="Collection">
+                    <rdf:Description>
+                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#int">0</xsd:minInclusive>
+                    </rdf:Description>
+                    <rdf:Description>
+                        <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#int">255</xsd:maxInclusive>
+                    </rdf:Description>
+                </owl:withRestrictions>
+            </rdfs:Datatype>
+        </rdfs:range>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/federico-spiga/ontologies/Colors#Color -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Color">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/federico-spiga/ontologies/Colors#name"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/federico-spiga/ontologies/Colors#rgbCoordinateBlue"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/federico-spiga/ontologies/Colors#rgbCoordinateGreen"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/federico-spiga/ontologies/Colors#rgbCoordinateRed"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/federico-spiga/ontologies/Colors#Black -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Black">
+        <rdf:type rdf:resource="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Color"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">black</name>
+        <rgbCoordinateBlue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">000</rgbCoordinateBlue>
+        <rgbCoordinateGreen rdf:datatype="http://www.w3.org/2001/XMLSchema#int">000</rgbCoordinateGreen>
+        <rgbCoordinateRed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">000</rgbCoordinateRed>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/federico-spiga/ontologies/Colors#Blue -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Blue">
+        <rdf:type rdf:resource="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Color"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">blue</name>
+        <rgbCoordinateBlue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">255</rgbCoordinateBlue>
+        <rgbCoordinateGreen rdf:datatype="http://www.w3.org/2001/XMLSchema#int">000</rgbCoordinateGreen>
+        <rgbCoordinateRed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">000</rgbCoordinateRed>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/federico-spiga/ontologies/Colors#Brown -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Brown">
+        <rdf:type rdf:resource="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Color"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">brown</name>
+        <rgbCoordinateBlue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">042</rgbCoordinateBlue>
+        <rgbCoordinateGreen rdf:datatype="http://www.w3.org/2001/XMLSchema#int">042</rgbCoordinateGreen>
+        <rgbCoordinateRed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">165</rgbCoordinateRed>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/federico-spiga/ontologies/Colors#Cyan -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Cyan">
+        <rdf:type rdf:resource="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Color"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cyan</name>
+        <rgbCoordinateBlue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">255</rgbCoordinateBlue>
+        <rgbCoordinateGreen rdf:datatype="http://www.w3.org/2001/XMLSchema#int">255</rgbCoordinateGreen>
+        <rgbCoordinateRed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">000</rgbCoordinateRed>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/federico-spiga/ontologies/Colors#Gray -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Gray">
+        <rdf:type rdf:resource="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Color"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">gray</name>
+        <rgbCoordinateBlue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">192</rgbCoordinateBlue>
+        <rgbCoordinateGreen rdf:datatype="http://www.w3.org/2001/XMLSchema#int">192</rgbCoordinateGreen>
+        <rgbCoordinateRed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">192</rgbCoordinateRed>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/federico-spiga/ontologies/Colors#Green -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Green">
+        <rdf:type rdf:resource="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Color"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">green</name>
+        <rgbCoordinateBlue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">000</rgbCoordinateBlue>
+        <rgbCoordinateGreen rdf:datatype="http://www.w3.org/2001/XMLSchema#int">128</rgbCoordinateGreen>
+        <rgbCoordinateRed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">000</rgbCoordinateRed>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/federico-spiga/ontologies/Colors#Lime -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Lime">
+        <rdf:type rdf:resource="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Color"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">lime</name>
+        <rgbCoordinateBlue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">000</rgbCoordinateBlue>
+        <rgbCoordinateGreen rdf:datatype="http://www.w3.org/2001/XMLSchema#int">255</rgbCoordinateGreen>
+        <rgbCoordinateRed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">000</rgbCoordinateRed>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/federico-spiga/ontologies/Colors#Magenta -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Magenta">
+        <rdf:type rdf:resource="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Color"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">magenta</name>
+        <rgbCoordinateBlue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">255</rgbCoordinateBlue>
+        <rgbCoordinateGreen rdf:datatype="http://www.w3.org/2001/XMLSchema#int">000</rgbCoordinateGreen>
+        <rgbCoordinateRed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">255</rgbCoordinateRed>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/federico-spiga/ontologies/Colors#Navy -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Navy">
+        <rdf:type rdf:resource="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Color"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">navy</name>
+        <rgbCoordinateBlue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">128</rgbCoordinateBlue>
+        <rgbCoordinateGreen rdf:datatype="http://www.w3.org/2001/XMLSchema#int">000</rgbCoordinateGreen>
+        <rgbCoordinateRed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">000</rgbCoordinateRed>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/federico-spiga/ontologies/Colors#Orange -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Orange">
+        <rdf:type rdf:resource="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Color"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">orange</name>
+        <rgbCoordinateBlue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">000</rgbCoordinateBlue>
+        <rgbCoordinateGreen rdf:datatype="http://www.w3.org/2001/XMLSchema#int">165</rgbCoordinateGreen>
+        <rgbCoordinateRed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">255</rgbCoordinateRed>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/federico-spiga/ontologies/Colors#Pink -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Pink">
+        <rdf:type rdf:resource="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Color"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pink</name>
+        <rgbCoordinateBlue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">203</rgbCoordinateBlue>
+        <rgbCoordinateGreen rdf:datatype="http://www.w3.org/2001/XMLSchema#int">192</rgbCoordinateGreen>
+        <rgbCoordinateRed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">255</rgbCoordinateRed>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/federico-spiga/ontologies/Colors#Purple -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Purple">
+        <rdf:type rdf:resource="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Color"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">purple</name>
+        <rgbCoordinateBlue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">128</rgbCoordinateBlue>
+        <rgbCoordinateGreen rdf:datatype="http://www.w3.org/2001/XMLSchema#int">000</rgbCoordinateGreen>
+        <rgbCoordinateRed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">128</rgbCoordinateRed>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/federico-spiga/ontologies/Colors#Red -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Red">
+        <rdf:type rdf:resource="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Color"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">red</name>
+        <rgbCoordinateBlue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">000</rgbCoordinateBlue>
+        <rgbCoordinateGreen rdf:datatype="http://www.w3.org/2001/XMLSchema#int">000</rgbCoordinateGreen>
+        <rgbCoordinateRed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">255</rgbCoordinateRed>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/federico-spiga/ontologies/Colors#White -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/federico-spiga/ontologies/Colors#White">
+        <rdf:type rdf:resource="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Color"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">white</name>
+        <rgbCoordinateBlue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">255</rgbCoordinateBlue>
+        <rgbCoordinateGreen rdf:datatype="http://www.w3.org/2001/XMLSchema#int">255</rgbCoordinateGreen>
+        <rgbCoordinateRed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">255</rgbCoordinateRed>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/federico-spiga/ontologies/Colors#Yellow -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Yellow">
+        <rdf:type rdf:resource="http://www.semanticweb.org/federico-spiga/ontologies/Colors#Color"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">yellow</name>
+        <rgbCoordinateBlue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">000</rgbCoordinateBlue>
+        <rgbCoordinateGreen rdf:datatype="http://www.w3.org/2001/XMLSchema#int">255</rgbCoordinateGreen>
+        <rgbCoordinateRed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">255</rgbCoordinateRed>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi -->
+

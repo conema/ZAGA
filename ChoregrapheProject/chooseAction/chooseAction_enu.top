@@ -1,0 +1,19 @@
+topic: ~chooseAction()
+language: enu
+
+concept:(arm) ^rand[arm forearm bicep appendage forelimb]
+concept:(leg) ^rand[leg shank]
+concept:(hand) ^rand[hand mitten palm claw paw mitt]
+concept:(head) ^rand[head noggin brainpan poll]
+concept:(side) ^rand[left right]
+concept:(disambiguation)^rand["Tell me which part of the body I have to move" "Tell me something like ~side ~arm"]
+
+
+u:(^mode(disabled) {*} left {*} ~arm) $part=AL
+u:(^mode(disabled) {*} right {*} ~arm) $part=AR
+u:(^mode(disabled) {*} left {*} ~leg) $part=LL
+u:(^mode(disabled) {*} right {*} ~leg) $part=LR
+u:(^mode(disabled) {*} left {*} ~hand) $part=HL
+u:(^mode(disabled) {*} right {*} ~hand) $part=HR
+u:(^mode(disabled) {*} ~head {*}) $part=HH
+u:(^mode(disabled) {*}) I don't understand. ~disambiguation

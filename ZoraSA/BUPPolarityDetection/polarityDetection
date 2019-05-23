@@ -1,0 +1,3 @@
+#!/bin/bash
+
+java -cp target/polarity-detection-1.0-SNAPSHOT-jar-with-dependencies.jar -Xmx2G com.bupsolutions.polaritydetection.Main $@

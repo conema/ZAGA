@@ -1,0 +1,5 @@
+bs4
+rdflib
+nltk
+graphviz
+stanfordcorenlp
