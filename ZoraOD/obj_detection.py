@@ -1,4 +1,3 @@
-#!/usr/bin/env python2.7
 from grpc.beta import implementations
 import tensorflow as tf
 from scipy import misc
@@ -11,6 +10,7 @@ from object_detection.utils import label_map_util
 from tensorflow_serving.apis import predict_pb2
 from tensorflow_serving.apis import prediction_service_pb2
 import os
+import imageio
 import socket
 
 # Metodo per trovare il risultato dell'object detection.
@@ -50,7 +50,7 @@ def find_result(image_path, image_name):
     boxes = np.reshape(boxes, [100, 4])
 
     # per salvare l'immagine con i bounding box, dobbiamo aprire l'immagine e sfruttare la libreria vis_util di tensorflow
-    im = misc.imread(image_path)  # legge l'immagine come un array multidimensionale
+    im = imageio.imread(image_path)  # legge l'immagine come un array multidimensionale
     label_map_path = "Label_maps/mscoco_label_map.pbtxt"
     label_map = label_map_util.load_labelmap(label_map_path) # mappa id-label
     categories = label_map_util.convert_label_map_to_categories(label_map=label_map, max_num_classes=90)  # lista di dizionari
@@ -68,7 +68,7 @@ def find_result(image_path, image_name):
         use_normalized_coordinates=True,
         line_thickness=5)  # larghezza linea del contorno dei box
 
-    misc.imsave("Images_bbx/{}_coco.jpg".format(image_name), image_vis)  # salva l'array come un'immagine JPEG
+    imageio.imwrite("Images_bbx/{}_coco.jpg".format(image_name), image_vis)  # salva l'array come un'immagine JPEG
 
     client_hdfs = InsecureClient('http://localhost:50070')  # client per accedere al HDFS
 

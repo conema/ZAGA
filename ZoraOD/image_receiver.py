@@ -16,7 +16,7 @@ api = Api(app)
 class ObjectDetection(Resource):
     def post(self):
         image_name = int(time.time()) #per avere sempre immagini con nomi diversi utilizzo la funzione time di python
-        image_path="/root/Zora-Object-Detection/Images_bbx/{}.jpg".format(image_name)
+        image_path="/root/ZAGA/ZoraOD/Images_bbx/{}.jpg".format(image_name)
         with open(image_path, 'wb') as image:
             image.write(request.data) #l'immagine contenuta in request.data viene salvata in locale
         # result e' il risultato dell'object detection. Puo' essere la stringa che deve pronunciare il robot,

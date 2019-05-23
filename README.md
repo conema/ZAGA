@@ -51,11 +51,7 @@ All the following points are mandatory to use this project
 1. Use the [`google-oauthlib-tool`](https://github.com/GoogleCloudPlatform/google-auth-library-python-oauthlib) to generate credentials:
 
 ```
-google-oauthlib-tool --client-secrets credentials.json \
-                             --credentials devicecredentials.json \
-                             --scope https://www.googleapis.com/auth/assistant-sdk-prototype \
-                             --save
-
+google-oauthlib-tool --scope https://www.googleapis.com/auth/assistant-sdk-prototype --save --headless --client-secrets credentials.json
 ```
 8. To start do the box follow:
     1. [Start GA](#usage-with-naozora)
@@ -63,7 +59,7 @@ google-oauthlib-tool --client-secrets credentials.json \
     1. [Start Object Recognition](#usage-with-naozora-2)
     1. [Start Sentiment Analysis](#usage-with-naozora-3)
 
-**Note:** Use `docker run -it build1:ZAGA` to start the container
+**Note:** Use `docker run -P -it build1:ZAGA` to start the container
 ## Manual procedure
 ### [1] GA Server (By [conema](https://github.com/conema/GA-Server)) 
 [🡅 TOP](#zaga)
@@ -90,11 +86,7 @@ env/bin/pip install --upgrade "google-auth-oauthlib[tool]"
 5.  Use the [`google-oauthlib-tool`](https://github.com/GoogleCloudPlatform/google-auth-library-python-oauthlib) to generate credentials:
 
 ```
-env/bin/google-oauthlib-tool --client-secrets credentials.json \
-                             --credentials devicecredentials.json \
-                             --scope https://www.googleapis.com/auth/assistant-sdk-prototype \
-                             --save
-
+env/bin/google-oauthlib-tool --scope https://www.googleapis.com/auth/assistant-sdk-prototype --save --headless --client-secrets /path/to/credentials.json
 ```
 
 6.  `git clone https://github.com/conema/GA-Server.git`
@@ -128,18 +120,20 @@ A video showing the proposed system and the knowledge that is possible to extrac
 More information about this project can be found [here](https://github.com/Fspiga13/Humanoid-Robot-Obeys-Human-Action-Commands-through-a-Robot-Action-Ontology).
 
 #### Prerequisites
-The project should works with **Python 2.7** and Python 3, but only Python 2.7 is tested. **Java 8** is also needed.
+The project should works with Python 2.7 and **Python 3**, but it's tested only with Python 3. **Java 8** is also needed.
 
 **Note:** this project use the python env variable for starting scripts, so the variable *python* should be present.
 1. Install required modules
 ```
-pip install requests && \
-pip install hdfs && \
-pip install bs4 && \
-pip install rdflib && \
-pip install nltk && \
-pip install graphviz && \
-pip install stanfordcorenlp
+pip3 install requests &&\
+pip3 install hdfs &&\
+pip3 install bs4 &&\
+pip3 install rdflib &&\
+pip3 install nltk &&\ 
+pip3 install graphviz &&\
+pip3 install stanfordcorenlp &&\
+pip3 install networkx &&\
+pip3 install matplotlib
 ```
 2. Download [Stanford CoreNLP](http://nlp.stanford.edu/software/stanford-corenlp-full-2018-10-05.zip) and move the unzipped folder into the `textToRdf` folder
 
@@ -167,7 +161,7 @@ java -jar ZoraNlpReasoner.jar
 1. Run the CoreNLP server
 ```
 cd ZoraAC/textToRdf/stanford-corenlp-full-2018-10-05/ && \
-java -mx4g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9000 -timeout 15000
+java -mx6g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9000 -timeout 15000
 ```
 **Note:** Using Stanford locally requires about 4GB of free RAM
 
@@ -198,7 +192,9 @@ pip3 install scipy && \
 pip3 install object-detection && \
 pip3 install hdfs && \
 pip3 install tensorflow-serving-api && \
-pip3 install flask
+pip3 install flask && \
+pip3 install flask_restful && \
+pip3 install imageio
 ```
 2. Install TFX via APT ([More installation alternative here](https://www.tensorflow.org/tfx/serving/setup))
     1. Add TensorFlow Serving distribution URI as a package source
@@ -229,6 +225,25 @@ pip3 install flask
     cd models/research/  && \
     <PROTOC_FOLDER>/bin/protoc object_detection/protos/*.proto --python_out=.
     ```
+    1. Add protos files to PYTHONPATH. Change **<PROTOS_COMPILED>** with the absolute path of the folder where you put the TensorFlow models
+      ```
+      echo "export PYTHONPATH=$PYTHONPATH:<PROTOS_COMPILED>/research:<PROTOS_COMPILED>/research/slim" >> ~/.bashrc && \
+      source ~/.bashrc
+      ```
+
+1. Download the models
+   ```
+   cd ../../ZoraOD/
+   mkdir -p Models/coco_model/1/
+   mkdir -p Models/people_model/1/
+   mkdir -p Models/pets_model/1/
+
+   wget https://github.com/hri-unica/Zora-Object-Detection/raw/master/Models/coco_model/1/saved_model.pb -O Models/coco_model/1/saved_model.pb
+
+   wget https://github.com/hri-unica/Zora-Object-Detection/raw/master/Models/people_model/1/saved_model.pb -O Models/people_model/1/saved_model.pb
+
+   wget https://github.com/hri-unica/Zora-Object-Detection/raw/master/Models/pets_model/1/saved_model.pb -O Models/pets_model/1/saved_model.pb
+   ```
 
 #### Usage
 1. Go to `ZoraOD/`
@@ -288,13 +303,18 @@ wget https://github.com/aciapetti/opennlp-italian-models/raw/master/models/it/it
 wget https://github.com/aciapetti/opennlp-italian-models/blob/master/models/it/it-sent.bin &&\
 wget https://github.com/aciapetti/opennlp-italian-models/blob/master/models/it/it-token.bin
 ```
+5. Export Maven opts
+```
+echo 'export MAVEN_OPTS="-Xmx2G -Dorg.bytedeco.javacpp.maxbytes=10G -Dorg.bytedeco.javacpp.maxphysicalbytes=10G"' >> ~/.bashrc &&\
+source ~/.bashrc
+```
 
 #### Usage with NAO/Zora
 1. Go into the `ZoraSA` folder
 1. Start the polarity detection service. `<PATH_TO_MAVEN>` should be changed with the directory to the local installed Maven.
 ```
 cd ZoraSA/BUPPolarityDetection/  && \
-<PATH_TO_MAVEN>/bin/mvn jetty:run -Djetty.http.port=8080 -Xms1G -Xmx2G -Dorg.bytedeco.javacpp.maxbytes=8G -Dorg.bytedeco.javacpp.maxphysicalbytes=10G
+<PATH_TO_MAVEN>/bin/mvn jetty:run -Djetty.http.port=8080
 ```
 2.  Open the Choregraphe project, right click on the **SA** box, click **Set parameter** and set as **URL** the url of the preceded server (something like `http://<IP>:8080/sa/service`, where IP is the internet address of the computer where Jetty is running)
 1.  Start the behavior, and after been said `Hey Zora`, wait for the beep and for eyes becoming blue, and say `execute sentiment analysis`

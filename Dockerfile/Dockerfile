@@ -23,8 +23,8 @@ RUN apt-get update
 RUN apt-get -y upgrade
 
 RUN apt-get install -y git
-RUN apt-get install -y python2.7 python-pip
-RUN apt-get install -y python3 python3-pip
+#RUN apt-get install -y python2.7 python-pip
+RUN apt-get install -y python3.5 python3-pip
 RUN apt-get install -y curl
 RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
 RUN apt-get install -y nodejs
@@ -33,6 +33,7 @@ RUN apt-get install -y wget
 RUN apt-get install -y unzip
 
 WORKDIR /root/
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.5 1
 RUN git clone https://github.com/conema/ZAGA.git
 
 # GA
@@ -45,17 +46,19 @@ WORKDIR /root/ZAGA/GA-Server/
 RUN npm install
 
 # AC
-RUN pip install requests &&\
-pip install hdfs &&\
-pip install bs4 &&\
-pip install rdflib &&\
-pip install nltk &&\ 
-pip install graphviz &&\
-pip install stanfordcorenlp
+RUN pip3 install requests &&\
+pip3 install hdfs &&\
+pip3 install bs4 &&\
+pip3 install rdflib &&\
+pip3 install nltk &&\ 
+pip3 install graphviz &&\
+pip3 install stanfordcorenlp &&\
+pip3 install networkx &&\
+pip3 install matplotlib
 
 WORKDIR /root/ZAGA/ZoraAC/textToRdf/
 RUN wget http://nlp.stanford.edu/software/stanford-corenlp-full-2018-10-05.zip
-RUN unzip stanford-corenlp-full-2018-10-05.zip -d stanford-corenlp-full-2018-10-05
+RUN unzip stanford-corenlp-full-2018-10-05.zip
 RUN rm stanford-corenlp-full-2018-10-05.zip
 
 # Object detection
@@ -66,7 +69,9 @@ pip3 install scipy &&\
 pip3 install object-detection &&\
 pip3 install hdfs &&\
 pip3 install tensorflow-serving-api &&\
-pip3 install flask
+pip3 install flask &&\
+pip3 install flask_restful &&\
+pip3 install imageio
 
 RUN echo "deb [arch=amd64] http://storage.googleapis.com/tensorflow-serving-apt stable tensorflow-model-server tensorflow-model-server-universal" | tee /etc/apt/sources.list.d/tensorflow-serving.list && \
 curl https://storage.googleapis.com/tensorflow-serving-apt/tensorflow-serving.release.pub.gpg | apt-key add
@@ -84,11 +89,26 @@ RUN unzip protoc-3.3.0-linux-x86_64.zip
 WORKDIR /root/models/research/
 RUN /root/protobuf/bin/protoc object_detection/protos/*.proto --python_out=.
 
+RUN echo "export PYTHONPATH=$PYTHONPATH:/root/models/research:/root/models/research/slim" >> ~/.bashrc
+RUN source ~/.bashrc
+
+WORKDIR /root/ZAGA/ZoraOD/
+RUN mkdir -p Models/coco_model/1/
+RUN mkdir -p Models/people_model/1/
+RUN mkdir -p Models/pets_model/1/
+
+RUN wget https://github.com/hri-unica/Zora-Object-Detection/raw/master/Models/coco_model/1/saved_model.pb -O Models/coco_model/1/saved_model.pb
+RUN wget https://github.com/hri-unica/Zora-Object-Detection/raw/master/Models/people_model/1/saved_model.pb -O Models/people_model/1/saved_model.pb
+RUN wget https://github.com/hri-unica/Zora-Object-Detection/raw/master/Models/pets_model/1/saved_model.pb -O Models/pets_model/1/saved_model.pb
+
 # SA
 WORKDIR /root/
 RUN wget http://it.apache.contactlab.it/maven/maven-3/3.6.1/binaries/apache-maven-3.6.1-bin.tar.gz
 RUN tar -xvf apache-maven-3.6.1-bin.tar.gz
 RUN rm apache-maven-3.6.1-bin.tar.gz
+
+RUN echo 'export MAVEN_OPTS="-Xmx2G -Dorg.bytedeco.javacpp.maxbytes=10G -Dorg.bytedeco.javacpp.maxphysicalbytes=10G"' >> ~/.bashrc
+RUN source ~/.bashrc
 
 WORKDIR /root/ZAGA/ZoraSA/
 RUN wget -O SentiWordNet_3.0.txt https://github.com/aesuli/SentiWordNet/blob/master/data/SentiWordNet_3.0.0.txt

@@ -1,11 +1,10 @@
-#!/usr/bin/env python2.7
-
 from scipy import misc
 import numpy as np
 from object_detection.utils import visualization_utils as vis_util
 from object_detection.utils import label_map_util
 from hdfs import InsecureClient
 import socket
+import imageio
 import os
 
 # Metodo per trovare le labels associate ad un'immagine in input nei modelli basati sui dataset specifici:
@@ -33,7 +32,7 @@ def find_labels(image_path, image_name, stub, request, model, n):
     boxes = np.reshape(boxes, [100, 4])
 
     # per salvare l'immagine con i bounding box, dobbiamo aprire l'immagine e sfruttare la libreria vis_util di tensorflow
-    im = misc.imread(image_path)  # legge l'immagine come un array multidimensionale
+    im = imageio.imread(image_path)  # legge l'immagine come un array multidimensionale
     if(model == "pets_model"):
         label_map_path = "Label_maps/pets_label_map.pbtxt" # mappa delle label
         label_map = label_map_util.load_labelmap(label_map_path)
@@ -60,12 +59,12 @@ def find_labels(image_path, image_name, stub, request, model, n):
     port_result = sock.connect_ex(('localhost', 50070))
     client_hdfs = InsecureClient('http://localhost:50070')  # client per accedere al HDFS
     if(model == "pets_model"):
-        misc.imsave("Images_bbx/{}_pets.jpg".format(image_name),image_vis)  # salva l'array in locale come un'immagine JPEG
+        imageio.imwrite("Images_bbx/{}_pets.jpg".format(image_name),image_vis)  # salva l'array in locale come un'immagine JPEG
         if port_result == 0:  # se l'HDFS e' connesso, vi sposto l'immagine
             client_hdfs.upload('/zora-object-detection/images/{}_pets.jpg'.format(image_name),'Images_bbx/{}_pets.jpg'.format(image_name))
             os.remove("Images_bbx/{}_pets.jpg".format(image_name))
     else:
-        misc.imsave("Images_bbx/{}_people.jpg".format(image_name),image_vis)
+        imageio.imwrite("Images_bbx/{}_people.jpg".format(image_name),image_vis)
         if port_result == 0:
             client_hdfs.upload('/zora-object-detection/images/{}_people.jpg'.format(image_name),'Images_bbx/{}_people.jpg'.format(image_name))
             os.remove("Images_bbx/{}_people.jpg".format(image_name))
