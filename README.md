@@ -35,7 +35,7 @@ All the following points are mandatory to use this project
       - [Prerequisites](#prerequisites-3)
       - [Usage](#usage-1)
       - [Usage with NAO/Zora](#usage-with-naozora-2)
-   - [Sentiment analysis](#4-sentiment-analysis-by-Mattia-Atzeni)
+   - [Sentiment analysis](#4-sentiment-analysis-by-mattia-atzeni)
       - [Prerequisites](#prerequisites-4)
       - [Usage with NAO/Zora](#usage-with-naozora-3)
    - [Bingo](#5-bingo)
@@ -47,7 +47,9 @@ All the following points are mandatory to use this project
 1. Wait for the end of the build (it can take some time)
 1. Create/open a project in the [Actions Console](http://console.actions.google.com/)
 1.  [Register a device model](https://developers.google.com/assistant/sdk/guides/service/python/embed/register-device)
-1.  Download `credentials.json`
+1.  Download the credentials
+1. Use `docker run -P -it build1:ZAGA` to start the container
+1. Move the json with credentials into the container
 1. Use the [`google-oauthlib-tool`](https://github.com/GoogleCloudPlatform/google-auth-library-python-oauthlib) to generate credentials:
 
 ```
@@ -59,7 +61,6 @@ google-oauthlib-tool --scope https://www.googleapis.com/auth/assistant-sdk-proto
     1. [Start Object Recognition](#usage-with-naozora-2)
     1. [Start Sentiment Analysis](#usage-with-naozora-3)
 
-**Note:** Use `docker run -P -it build1:ZAGA` to start the container
 ## Manual procedure
 ### [1] GA Server (By [conema](https://github.com/conema/GA-Server)) 
 [🡅 TOP](#zaga)
