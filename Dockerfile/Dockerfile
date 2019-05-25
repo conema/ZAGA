@@ -90,7 +90,6 @@ WORKDIR /root/models/research/
 RUN /root/protobuf/bin/protoc object_detection/protos/*.proto --python_out=.
 
 RUN echo "export PYTHONPATH=$PYTHONPATH:/root/models/research:/root/models/research/slim" >> ~/.bashrc
-RUN source ~/.bashrc
 
 WORKDIR /root/ZAGA/ZoraOD/
 RUN mkdir -p Models/coco_model/1/
@@ -108,10 +107,14 @@ RUN tar -xvf apache-maven-3.6.1-bin.tar.gz
 RUN rm apache-maven-3.6.1-bin.tar.gz
 
 RUN echo 'export MAVEN_OPTS="-Xmx2G -Dorg.bytedeco.javacpp.maxbytes=10G -Dorg.bytedeco.javacpp.maxphysicalbytes=10G"' >> ~/.bashrc
-RUN source ~/.bashrc
 
 WORKDIR /root/ZAGA/ZoraSA/
-RUN wget -O SentiWordNet_3.0.txt https://github.com/aesuli/SentiWordNet/blob/master/data/SentiWordNet_3.0.0.txt
+RUN wget -O SentiWordNet_3.0.txt https://github.com/aesuli/SentiWordNet/raw/master/data/SentiWordNet_3.0.0.txt
+
+WORKDIR /root/ZAGA/ZoraSA/BUPPolarityDetection/
+RUN wget https://github.com/hri-unica/Nao-Zora-Polarity/raw/master/BUPPolarityDetection/en-rnn.zip &&\
+wget https://github.com/hri-unica/Nao-Zora-Polarity/raw/master/BUPPolarityDetection/it-rnn.zip &&\
+wget https://github.com/hri-unica/Nao-Zora-Polarity/raw/master/BUPPolarityDetection/subj-rnn.zip
 
 WORKDIR /root/ZAGA/ZoraSA/BUPPolarityDetection/opennlp/
 RUN wget http://opennlp.sourceforge.net/models-1.5/en-ner-date.bin &&\

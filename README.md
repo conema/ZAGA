@@ -286,11 +286,19 @@ NAO/Zora can automatically understand the **polarity** of what the user says. Ba
 1. Download SentiWordNet_3.0
 ```
 cd ZoraSA/ &&\
-wget -O SentiWordNet_3.0.txt https://github.com/aesuli/SentiWordNet/blob/master/data/SentiWordNet_3.0.0.txt
+wget -O SentiWordNet_3.0.txt https://github.com/aesuli/SentiWordNet/raw/master/data/SentiWordNet_3.0.0.txt
 ```
-4. Download opennlp files
+4. Download RNN models
 ```
-cd ZoraSA/BUPPolarityDetection/opennlp/ &&\
+cd BUPPolarityDetection &&\
+wget https://github.com/hri-unica/Nao-Zora-Polarity/raw/master/BUPPolarityDetection/en-rnn.zip &&\
+wget https://github.com/hri-unica/Nao-Zora-Polarity/raw/master/BUPPolarityDetection/it-rnn.zip &&\
+wget https://github.com/hri-unica/Nao-Zora-Polarity/raw/master/BUPPolarityDetection/subj-rnn.zip
+```
+
+5. Download opennlp files
+```
+cd opennlp &&\
 wget http://opennlp.sourceforge.net/models-1.5/en-ner-date.bin &&\
 wget http://opennlp.sourceforge.net/models-1.5/en-ner-location.bin &&\
 wget http://opennlp.sourceforge.net/models-1.5/en-ner-organization.bin &&\
