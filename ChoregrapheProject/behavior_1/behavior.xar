@@ -49,23 +49,22 @@ from subprocess import Popen, PIPE
 from threading import Thread
 from Queue import Queue, Empty
 
-class MyClass(GeneratedClass):
-    # TCP client
-    BUFFER_SIZE = 512
+# TCP client
+BUFFER_SIZE = 512
 
-    # GA answers
-    EOU = "END_OF_UTTERANCE"
-    DFO = "DIALOG_FOLLOW_ON"
+# GA answers
+EOU = "END_OF_UTTERANCE"
+DFO = "DIALOG_FOLLOW_ON"
 
-    # Recording com
-    command = ['arecord',
+# Recording com
+command = ['arecord',
             '--format', 'S16_LE',
             '--rate', '16000',
             '--file-type', 'raw']
 
-    ON_POSIX = 'posix' in sys.builtin_module_names
+ON_POSIX = 'posix' in sys.builtin_module_names
 
-
+class MyClass(GeneratedClass):
     def __init__(self):
         GeneratedClass.__init__(self)
         self.tts = ALProxy('ALTextToSpeech')
@@ -93,10 +92,10 @@ class MyClass(GeneratedClass):
         self.eu = ""
         self.soundPeak = False
 
-        self.q, self.t = start_recording()
+        self.q, self.t = self.start_recording()
         self.logger.info("Recording...")
 
-        self.s = connect_ga()
+        self.s = self.connect_ga()
         self.logger.info("Connected to GA")
 
         self.onListening()
@@ -124,7 +123,14 @@ class MyClass(GeneratedClass):
                     try:
                         self.s.send(data)
 
-                        self.eu += self.s.recv(BUFFER_SIZE)
+                        try:
+                            self.eu += self.s.recv(BUFFER_SIZE)
+                        except socket.error, e:
+                            err = e.args[0]
+
+                            if err != errno.EAGAIN and err != errno.EWOULDBLOCK:
+                                print e
+                                break;
                     except:
                         break;
 
@@ -137,7 +143,14 @@ class MyClass(GeneratedClass):
                     self.logger.info("END_OF_UTTERANCE")
 
                     while True:
-                        self.eu += self.s.recv(BUFFER_SIZE)
+                        try:
+                            self.eu += self.s.recv(BUFFER_SIZE)
+                        except socket.error, e:
+                            err = e.args[0]
+
+                            if err != errno.EAGAIN and err != errno.EWOULDBLOCK:
+                                print e
+                                break;
 
                         #No more data from server
                         if("STOP_JSON" in self.eu):
@@ -242,13 +255,14 @@ class MyClass(GeneratedClass):
 
     def connect_ga(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect(self.ip, self.port)
+        s.connect((self.ip, self.port))
+        s.setblocking(0)
         return s
 
     def start_recording(self):
         p = Popen(command, stdout=PIPE, bufsize=1, close_fds=ON_POSIX)
         q = Queue()
-        t = Thread(target=enqueue_output, args=(p.stdout, q))
+        t = Thread(target=self.enqueue_output, args=(p.stdout, q))
         t.daemon = True
         t.start()
 
@@ -1097,13 +1111,13 @@ class MyClass(GeneratedClass):
                                             <Link inputowner="5" indexofinput="2" outputowner="2" indexofoutput="9" />
                                             <Link inputowner="5" indexofinput="3" outputowner="2" indexofoutput="6" />
                                             <Link inputowner="6" indexofinput="2" outputowner="0" indexofoutput="2" />
-                                            <Link inputowner="4" indexofinput="2" outputowner="0" indexofoutput="2" />
                                             <Link inputowner="3" indexofinput="2" outputowner="0" indexofoutput="2" />
                                             <Link inputowner="2" indexofinput="2" outputowner="0" indexofoutput="2" />
                                             <Link inputowner="0" indexofinput="5" outputowner="2" indexofoutput="10" />
                                             <Link inputowner="7" indexofinput="2" outputowner="2" indexofoutput="5" />
                                             <Link inputowner="10" indexofinput="2" outputowner="7" indexofoutput="3" />
                                             <Link inputowner="0" indexofinput="4" outputowner="10" indexofoutput="4" />
+                                            <Link inputowner="4" indexofinput="2" outputowner="0" indexofoutput="2" />
                                         </Diagram>
                                     </BehaviorKeyframe>
                                 </BehaviorLayer>
@@ -3132,7 +3146,7 @@ class MyClass(GeneratedClass):
                                                                         <chinese>
                                                                             <![CDATA[]]>
 </chinese>
-                                                                        <language>11</language>
+                                                                        <language>14</language>
                                                                     </pluginContent>
                                                                     <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                                     <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -3862,7 +3876,7 @@ class MyClass(GeneratedClass):
                                                                         <chinese>
                                                                             <![CDATA[]]>
 </chinese>
-                                                                        <language>14</language>
+                                                                        <language>17</language>
                                                                     </pluginContent>
                                                                     <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                                     <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -5555,7 +5569,7 @@ class MyClass(GeneratedClass):
                                                                         <chinese>
                                                                             <![CDATA[]]>
 </chinese>
-                                                                        <language>18</language>
+                                                                        <language>-1</language>
                                                                     </pluginContent>
                                                                     <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                                     <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -7202,7 +7216,7 @@ class MyClass(GeneratedClass):
                                                                                                                 <chinese>
                                                                                                                     <![CDATA[]]>
 </chinese>
-                                                                                                                <language>16</language>
+                                                                                                                <language>19</language>
                                                                                                             </pluginContent>
                                                                                                             <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                                                                             <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -8201,7 +8215,7 @@ class MyClass(GeneratedClass):
                                                                                                                 <chinese>
                                                                                                                     <![CDATA[]]>
 </chinese>
-                                                                                                                <language>16</language>
+                                                                                                                <language>19</language>
                                                                                                             </pluginContent>
                                                                                                             <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                                                                             <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -8655,7 +8669,7 @@ class MyClass(GeneratedClass):
                                                                         <chinese>
                                                                             <![CDATA[]]>
 </chinese>
-                                                                        <language>18</language>
+                                                                        <language>-1</language>
                                                                     </pluginContent>
                                                                     <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                                     <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -8954,7 +8968,7 @@ class MyClass(GeneratedClass):
                                                                         <chinese>
                                                                             <![CDATA[]]>
 </chinese>
-                                                                        <language>18</language>
+                                                                        <language>-1</language>
                                                                     </pluginContent>
                                                                     <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                                     <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
