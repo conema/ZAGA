@@ -33,7 +33,7 @@
                                 <BehaviorLayer name="behavior_layer1">
                                     <BehaviorKeyframe name="keyframe1" index="1">
                                         <Diagram>
-                                            <Box name="GA" id="2" localization="8" tooltip="This box contains a python script that can be utilized to speak with Google Assistant" x="489" y="52">
+                                            <Box name="GA" id="2" localization="8" tooltip="This box contains a python script that can be utilized to speak with Google Assistant" x="491" y="54">
                                                 <bitmap>media/images/box/box-python-script.png</bitmap>
                                                 <script language="4">
                                                     <content>
@@ -44,6 +44,7 @@ import re
 import json
 import sys
 import threading
+import errno
 
 from subprocess import Popen, PIPE
 from threading import Thread
@@ -129,7 +130,7 @@ class MyClass(GeneratedClass):
                             err = e.args[0]
 
                             if err != errno.EAGAIN and err != errno.EWOULDBLOCK:
-                                print e
+                                self.logger.info(e)
                                 break;
                     except:
                         break;
@@ -185,7 +186,7 @@ class MyClass(GeneratedClass):
 
                     if "text" in response:
                         #We have a text answer from GA
-                        speach = remove_emoji(response["text"])
+                        speach = self.remove_emoji(response["text"])
                         speach = speach.encode('utf-8')
                         speach = re.sub(r'\.\n.*\n*\( +.+\)\.*', '', speach) #remove link from supplemental display text
                         speach = re.sub(r'-{3}', '', speach) #remove ---
@@ -3146,7 +3147,7 @@ class MyClass(GeneratedClass):
                                                                         <chinese>
                                                                             <![CDATA[]]>
 </chinese>
-                                                                        <language>14</language>
+                                                                        <language>15</language>
                                                                     </pluginContent>
                                                                     <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                                     <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -3876,7 +3877,7 @@ class MyClass(GeneratedClass):
                                                                         <chinese>
                                                                             <![CDATA[]]>
 </chinese>
-                                                                        <language>17</language>
+                                                                        <language>18</language>
                                                                     </pluginContent>
                                                                     <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                                     <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -7216,7 +7217,7 @@ class MyClass(GeneratedClass):
                                                                                                                 <chinese>
                                                                                                                     <![CDATA[]]>
 </chinese>
-                                                                                                                <language>19</language>
+                                                                                                                <language>20</language>
                                                                                                             </pluginContent>
                                                                                                             <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                                                                             <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -8215,7 +8216,7 @@ class MyClass(GeneratedClass):
                                                                                                                 <chinese>
                                                                                                                     <![CDATA[]]>
 </chinese>
-                                                                                                                <language>19</language>
+                                                                                                                <language>20</language>
                                                                                                             </pluginContent>
                                                                                                             <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                                                                             <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
