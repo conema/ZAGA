@@ -13,9 +13,7 @@
     </Dialogs>
     <Resources>
         <File name="google-assistant" src="google-assistant.png" />
-        <File name="" src=".gitignore" />
         <File name="LICENSE" src="LICENSE" />
-        <File name="README" src="README.md" />
         <File name="ZoraThinking" src="sounds/ZoraThinking.wav" />
         <File name="beep" src="sounds/beep.wav" />
     </Resources>
