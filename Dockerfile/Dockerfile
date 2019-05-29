@@ -19,6 +19,9 @@ EXPOSE 4002
 # jetty
 EXPOSE 8080
 
+# chatbot
+EXPOSE 4003
+
 RUN apt-get update
 RUN apt-get -y upgrade
 
@@ -31,6 +34,7 @@ RUN apt-get install -y nodejs
 RUN apt-get install -y openjdk-8-jdk
 RUN apt-get install -y wget
 RUN apt-get install -y unzip
+RUN apt-get install -y graphviz
 
 WORKDIR /root/
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.5 1
@@ -54,7 +58,11 @@ pip3 install nltk &&\
 pip3 install graphviz &&\
 pip3 install stanfordcorenlp &&\
 pip3 install networkx &&\
-pip3 install matplotlib
+pip3 install matplotlib &&\
+pip3 install flask_jsonpify &&\
+pip3 install keras &&\
+pip3 install theano &&\
+pip3 install pydot
 
 WORKDIR /root/ZAGA/ZoraAC/textToRdf/
 RUN wget http://nlp.stanford.edu/software/stanford-corenlp-full-2018-10-05.zip
@@ -135,6 +143,34 @@ WORKDIR /root/ZAGA/ZoraSA/WordVectors/glove.6B/
 RUN wget http://nlp.stanford.edu/data/glove.6B.zip
 RUN unzip glove.6B.zip
 RUN rm glove.6B.zip
+
+# Chatbot
+WORKDIR /root/ZAGA/ZoraCB/
+
+RUN echo "import nltk" >> install.py
+RUN echo "nltk.download('punkt')" >> install.py
+
+RUN python install.py
+RUN rm install.py
+
+RUN wget https://github.com/hri-unica/Nao-Zora-conversational-agent/raw/master/my_model_weights.zip.001 && \
+wget https://github.com/hri-unica/Nao-Zora-conversational-agent/raw/master/my_model_weights.zip.002 && \
+wget https://github.com/hri-unica/Nao-Zora-conversational-agent/raw/master/my_model_weights20.zip.001 && \
+wget https://github.com/hri-unica/Nao-Zora-conversational-agent/raw/master/my_model_weights20.zip.002 && \
+wget https://github.com/hri-unica/Nao-Zora-conversational-agent/raw/master/my_model_weights_bot.zip.001 && \
+wget https://github.com/hri-unica/Nao-Zora-conversational-agent/raw/master/my_model_weights_bot.zip.002 && \
+wget https://github.com/hri-unica/Nao-Zora-conversational-agent/raw/master/my_model_weights_bot.zip.003
+
+RUN cat my_model_weights.zip* > my_model_weights.zip && \
+cat my_model_weights_bot.zip* > my_model_weights_bot.zip && \
+cat my_model_weights20.zip* > my_model_weights20.zip && \
+unzip my_model_weights.zip && \
+unzip my_model_weights_bot.zip && \
+unzip my_model_weights20.zip
+
+RUN rm my_model_weights.zip && \
+rm my_model_weights_bot.zip && \
+rm my_model_weights20.zip
 
 WORKDIR /root/
 ENTRYPOINT [ "/bin/bash" ]

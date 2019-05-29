@@ -1,0 +1,23 @@
+topic: ~generic()
+language: enu
+
+concept:(greetings) ^rand[hi hello "hey there" hey]
+concept:(playBehavior) [run play]
+concept:(trigger) "Zora"
+
+
+u:(~greetings {*}) ~greetings
+u:({*} your {*} name {*}) My name is Zora
+u:({*} ["my name is _*" "I'm _*" "I am _*"]) Nice to meet you {$1}
+u:({*} ["how are you" "is everything ok"] {*}) I am fine thanks
+u:({*} [sit sitting] {*}) $action="sit down"
+u:({*} [stand standing] {*}) $action="stand up"
+u:({*} [move moving] {*} hand) $action="move hand"
+u:({*} say _* {to} {*}) $say=$1
+u:({*} ["tall {*} you" "your {*} height"] {*}) I am fiftyeight centimeters tall
+u:({*} ["old {*} you" "your {*} age"] {*}) "I do not become older with time, I become outdated"
+u:({*} [stop exit bye close quit done rest] {*}) $action="stop"
+u:({*} ~playBehavior sentiment analysis) $behavior="SentimentAnalysis"
+
+
+u:(_*) $unknownQuery=$1

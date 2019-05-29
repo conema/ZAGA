@@ -83,6 +83,15 @@
                         "sentiment",
                         "s a"
                     ]
+                },
+                {
+                    "key": "chat bot",
+                    "synonyms": [
+                        "chat",
+                        "bot",
+                        "chat bot",
+                        "chatbot"
+                    ]
                 }
             ]
         }

@@ -38,8 +38,11 @@ All the following points are mandatory to use this project
    - [Sentiment analysis](#4-sentiment-analysis-by-mattia-atzeni)
       - [Prerequisites](#prerequisites-4)
       - [Usage with NAO/Zora](#usage-with-naozora-3)
-   - [Bingo](#5-bingo)
+   - [Chatbot](#5-chatbot-by-mattia-atzeni)
+      - [Prerequisites](#prerequisites-5)
       - [Usage with NAO/Zora](#usage-with-naozora-4)
+   - [Bingo](#6-bingo)
+      - [Usage with NAO/Zora](#usage-with-naozora-5)
 ## Automatic precedure
 ### Dockerfile
 1. Go in the `Dockerfile` folder
@@ -60,6 +63,8 @@ google-oauthlib-tool --scope https://www.googleapis.com/auth/assistant-sdk-proto
     1. [Start Action Ontology](#usage-with-naozora-1)
     1. [Start Object Recognition](#usage-with-naozora-2)
     1. [Start Sentiment Analysis](#usage-with-naozora-3)
+
+**Note:** Remember that with docker you should use the published port that you see with `docker port <containerId>`. You can get the id with `docker ps`.
 
 ## Manual procedure
 ### [1] GA Server (By [conema](https://github.com/conema/GA-Server)) 
@@ -322,14 +327,70 @@ source ~/.bashrc
 1. Go into the `ZoraSA` folder
 1. Start the polarity detection service. `<PATH_TO_MAVEN>` should be changed with the directory to the local installed Maven.
 ```
-cd ZoraSA/BUPPolarityDetection/  && \
+cd BUPPolarityDetection/  && \
 <PATH_TO_MAVEN>/bin/mvn jetty:run -Djetty.http.port=8080
 ```
+**Note:** if you're using the docker image, *<PATH_TO_MAVEN>* is `/root/apache-maven-3.6.1/`
+
 2.  Open the Choregraphe project, right click on the **SA** box, click **Set parameter** and set as **URL** the url of the preceded server (something like `http://<IP>:8080/sa/service`, where IP is the internet address of the computer where Jetty is running)
 1.  Start the behavior, and after been said `Hey Zora`, wait for the beep and for eyes becoming blue, and say `execute sentiment analysis`
 1.  Say or write in the dialog box the text
 
-### [5] Bingo
+### [5] Chatbot (By Mattia Atzeni)
+[🡅 TOP](#zaga)
+
+Zora/Nao interprets and responds to statements made by users in ordinary natural language, using seq2seq.
+
+#### Prerequisites
+1. Install modules
+```
+apt-get install graphviz &&\
+pip3 install flask_jsonpify &&\
+pip3 install keras &&\
+pip3 install theano &&\
+pip3 install pydot
+```
+2. Download nltk (from bash)
+```
+python << END && \
+import nltk && \
+nltk.download('punkt') && \
+END
+```
+3. Download models
+   
+   1. Go to `ZoraCB` folder
+   1. Download
+   ```
+   wget https://github.com/hri-unica/Nao-Zora-conversational-agent/raw/master/my_model_weights.zip.001 && \
+   wget https://github.com/hri-unica/Nao-Zora-conversational-agent/raw/master/my_model_weights.zip.002 && \
+   wget https://github.com/hri-unica/Nao-Zora-conversational-agent/raw/master/my_model_weights20.zip.001 && \
+   wget https://github.com/hri-unica/Nao-Zora-conversational-agent/raw/master/my_model_weights20.zip.002 && \
+   wget https://github.com/hri-unica/Nao-Zora-conversational-agent/raw/master/my_model_weights_bot.zip.001 && \
+   wget https://github.com/hri-unica/Nao-Zora-conversational-agent/raw/master/my_model_weights_bot.zip.002 && \
+   wget https://github.com/hri-unica/Nao-Zora-conversational-agent/raw/master/my_model_weights_bot.zip.003
+   ```
+   3. Merge and extract
+   ```
+   cat my_model_weights.zip* > my_model_weights.zip && \
+   cat my_model_weights_bot.zip* > my_model_weights_bot.zip && \
+   cat my_model_weights20.zip* > my_model_weights20.zip && \
+   unzip my_model_weights.zip && \
+   unzip my_model_weights_bot.zip && \
+   unzip my_model_weights20.zip
+   ```
+
+#### Usage with NAO/Zora
+1. Go into the `ZoraCB` folder
+1. Start the webapp 
+```
+python3 webapp.py
+```
+2.  Open the Choregraphe project, right click on the **Chatbot** box, click **Set parameter** and set as **URL** the url of the preceded server (something like `http://<IP>:4003/chatbot`, where IP is the internet address of the computer where webapp.py is running)
+1.  Start the behavior, and after been said `Hey Zora`, wait for the beep and for eyes becoming blue, and say `execute chatbot`
+1.  Say or write in the dialog box the text
+
+### [6] Bingo
 [🡅 TOP](#zaga)
 
 Bingo is a **self-contained package**, which works **out-of-the-box** without any configuration, that plays Bingo with the user. It behaves as follows:

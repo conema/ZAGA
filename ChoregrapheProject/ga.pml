@@ -10,6 +10,7 @@
         <Dialog name="stt" src="stt/stt.dlg" />
         <Dialog name="chooseAction" src="chooseAction/chooseAction.dlg" />
         <Dialog name="listening" src="listening/listening.dlg" />
+        <Dialog name="generic" src="generic/generic.dlg" />
     </Dialogs>
     <Resources>
         <File name="google-assistant" src="google-assistant.png" />
@@ -23,6 +24,7 @@
         <Topic name="stt_enu" src="stt/stt_enu.top" topicName="stt" language="en_US" />
         <Topic name="chooseAction_enu" src="chooseAction/chooseAction_enu.top" topicName="chooseAction" language="en_US" />
         <Topic name="listening_enu" src="listening/listening_enu.top" topicName="listening" language="en_US" />
+        <Topic name="generic_enu" src="generic/generic_enu.top" topicName="generic" language="en_US" />
     </Topics>
     <IgnoredPaths />
 </Package>
